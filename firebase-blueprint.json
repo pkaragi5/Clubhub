@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["visitor", "member", "admin"] },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "socialLinks": {
+          "type": "object",
+          "properties": {
+            "github": { "type": "string" },
+            "linkedin": { "type": "string" },
+            "twitter": { "type": "string" }
+          }
+        },
+        "streak": { "type": "number" },
+        "totalScore": { "type": "number" },
+        "rank": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Club event details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "fullDescription": { "type": "string" },
+        "club": { "type": "string" },
+        "eventType": { "type": "string" },
+        "mode": { "type": "string" },
+        "venue": { "type": "string" },
+        "dateTime": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["upcoming", "past", "live"] },
+        "isPublished": { "type": "boolean" },
+        "registrations": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "club", "dateTime", "status", "isPublished", "registrations"]
+    },
+    "Challenge": {
+      "title": "Challenge",
+      "description": "Technical challenge details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "category": { "type": "string" },
+        "points": { "type": "number" },
+        "deadline": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "difficulty", "points"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "Challenge submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "challengeId": { "type": "string" },
+        "userId": { "type": "string" },
+        "githubUrl": { "type": "string" },
+        "liveUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "reviewed"] },
+        "score": { "type": "number" },
+        "submittedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["challengeId", "userId", "githubUrl"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Member project showcase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "techStack": { "type": "array", "items": { "type": "string" } },
+        "contributors": { "type": "array", "items": { "type": "string" } },
+        "githubUrl": { "type": "string" },
+        "liveUrl": { "type": "string" },
+        "likes": { "type": "number" },
+        "isFeatured": { "type": "boolean" }
+      },
+      "required": ["title", "description", "techStack"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Club events"
+    },
+    "/challenges/{challengeId}": {
+      "schema": "Challenge",
+      "description": "Technical challenges"
+    },
+    "/submissions/{submissionId}": {
+      "schema": "Submission",
+      "description": "Challenge submissions"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Project showcase"
+    }
+  }
+}
